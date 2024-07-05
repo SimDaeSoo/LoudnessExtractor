@@ -1,0 +1,62 @@
+{
+  "name": "loudness_extractor",
+  "productName": "Loudness Extractor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SimDaeSoo/LoudnessExtractor.git"
+  },
+  "version": "0.0.1",
+  "description": "Video & Audio Loudness Extractor",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "yarn build:style && electron-forge start",
+    "build:style": "tailwindcss -i ./src/renderer/public/index.css -o ./src/renderer/public/build.css",
+    "package:win": "yarn build:style && electron-forge package --platform win32 --arch x64",
+    "package:mac": "yarn build:style && electron-forge package --platform darwin --arch universal",
+    "make:win": "yarn build:style && electron-forge make --platform win32 --arch x64",
+    "make:mac": "yarn build:style && electron-forge make --platform darwin --arch universal",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts,.tsx ."
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-dmg": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron-forge/plugin-webpack": "^7.4.0",
+    "@electron-forge/publisher-github": "^7.4.0",
+    "@electron/fuses": "^1.8.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.14.1",
+    "@vercel/webpack-asset-relocator-loader": "1.7.3",
+    "css-loader": "^7.1.2",
+    "dotenv": "^16.4.5",
+    "electron": "31.1.0",
+    "eslint": "^9.5.0",
+    "eslint-plugin-import": "^2.25.0",
+    "fork-ts-checker-webpack-plugin": "^9.0.2",
+    "node-loader": "^2.0.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.2.2",
+    "ts-node": "^10.0.0",
+    "typescript": "~5.5.2"
+  },
+  "keywords": [],
+  "author": {
+    "name": "daesoo94",
+    "email": "tlaeotn123@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@ant-design/icons": "^5.3.7",
+    "antd": "^5.18.3",
+    "electron-squirrel-startup": "^1.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.4",
+    "update-electron-app": "^3.0.0"
+  }
+}
