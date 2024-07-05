@@ -1,12 +1,18 @@
 {
   "name": "loudness_extractor",
   "productName": "Loudness Extractor",
+  "description": "Video & Audio Loudness Extractor",
+  "version": "0.0.1",
+  "keywords": [],
+  "author": {
+    "name": "daesoo94",
+    "email": "tlaeotn123@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/SimDaeSoo/LoudnessExtractor.git"
   },
-  "version": "0.0.1",
-  "description": "Video & Audio Loudness Extractor",
+  "license": "MIT",
   "main": ".webpack/main",
   "scripts": {
     "start": "yarn build:style && electron-forge start",
@@ -44,14 +50,9 @@
     "ts-node": "^10.0.0",
     "typescript": "~5.5.2"
   },
-  "keywords": [],
-  "author": {
-    "name": "daesoo94",
-    "email": "tlaeotn123@gmail.com"
-  },
-  "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
+    "@electron-forge/maker-squirrel": "^7.4.0",
     "antd": "^5.18.3",
     "electron-squirrel-startup": "^1.0.1",
     "react": "^18.3.1",

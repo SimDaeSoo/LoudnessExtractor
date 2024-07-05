@@ -32,7 +32,17 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    ...(isWindowsBuild ? [] : []),
+    ...(isWindowsBuild
+      ? [
+          {
+            name: '@electron-forge/maker-squirrel',
+            config: {
+              certificateFile: './cert.pfx',
+              certificatePassword: process.env.CERTIFICATE_PASSWORD,
+            },
+          },
+        ]
+      : []),
     ...(isDarwinBuild
       ? [
           {
@@ -43,7 +53,7 @@ const config: ForgeConfig = {
           },
         ]
       : []),
-    new MakerZIP({}, ['darwin', 'win32']),
+    new MakerZIP({}, [...(isWindowsBuild ? ['win32'] : []), ...(isDarwinBuild ? ['darwin'] : [])]),
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
