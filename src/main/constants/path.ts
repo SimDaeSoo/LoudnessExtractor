@@ -10,3 +10,4 @@ export const PLATFORM_RESOURCE_PATH = resolve(RESOURCE_PATH, process.platform);
 export const BINARY_PATH = resolve(PLATFORM_RESOURCE_PATH, 'bin');
 export const FFMPEG_PATH = resolve(BINARY_PATH, 'ffmpeg');
 export const FFPROBE_PATH = resolve(BINARY_PATH, 'ffprobe');
+export const ICON_PATH = resolve(RESOURCE_PATH, 'icons');

@@ -19,7 +19,8 @@ const config: ForgeConfig = {
     process.platform === 'darwin'
       ? {
           asar: true,
-          extraResource: ['./src/resources/log'],
+          icon: './src/resources/icons/icon',
+          extraResource: ['./src/resources/log', './src/resources/icons'],
           osxUniversal: {
             x64ArchFiles: 'Contents/Resources/**/*',
           },
@@ -39,8 +40,18 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers:
     process.platform === 'darwin'
-      ? [new MakerDMG({ format: 'ULFO' }), new MakerZIP({}, ['win32', 'darwin'])]
-      : [new MakerSquirrel({})],
+      ? [
+          new MakerDMG({
+            format: 'ULFO',
+            icon: './src/resources/icons/icon.icns',
+          }),
+          new MakerZIP({}, ['win32', 'darwin']),
+        ]
+      : [
+          new MakerSquirrel({
+            setupIcon: './src/resources/icons/icon.ico',
+          }),
+        ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
