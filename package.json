@@ -1,7 +1,7 @@
 {
   "name": "loudness_extractor",
-  "productName": "Loudness Extractor",
-  "description": "Video & Audio Loudness Extractor",
+  "productName": "Loudness-Extractor",
+  "description": "Video and audio loudness extractor",
   "version": "0.0.1",
   "keywords": [],
   "author": {

@@ -32,7 +32,7 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    ...(isWindowsBuild
+    ...(isWindowsBuild && process.platform === 'win32'
       ? [
           {
             name: '@electron-forge/maker-squirrel',
@@ -43,7 +43,7 @@ const config: ForgeConfig = {
           },
         ]
       : []),
-    ...(isDarwinBuild
+    ...(isDarwinBuild && process.platform === 'darwin'
       ? [
           {
             name: '@electron-forge/maker-dmg',
