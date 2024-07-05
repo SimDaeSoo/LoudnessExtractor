@@ -39,8 +39,8 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers:
     process.platform === 'darwin'
-      ? [new MakerDMG({ format: 'ULFO' }), new MakerZIP({}, ['darwin'])]
-      : [new MakerSquirrel({}), new MakerZIP({}, ['win32'])],
+      ? [new MakerDMG({ format: 'ULFO' }), new MakerZIP({}, ['win32', 'darwin'])]
+      : [new MakerSquirrel({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
