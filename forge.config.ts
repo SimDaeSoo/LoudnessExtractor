@@ -1,4 +1,5 @@
 import { MakerDMG } from '@electron-forge/maker-dmg';
+import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
@@ -14,23 +15,32 @@ import { rendererConfig } from './webpack.renderer.config';
 loadConfig();
 
 const config: ForgeConfig = {
-  packagerConfig: {
-    asar: true,
-    extraResource: ['./src/resources/log'],
-    osxUniversal: {
-      x64ArchFiles: 'Contents/Resources/**/*',
-    },
-    osxSign: {
-      identity: process.env.APPLE_SIGN_ID,
-    },
-    osxNotarize: {
-      appleApiKey: process.env.APPLE_API_KEY || '',
-      appleApiKeyId: process.env.APPLE_API_KEY_ID || '',
-      appleApiIssuer: process.env.APPLE_API_ISSUER || '',
-    },
-  },
+  packagerConfig:
+    process.platform === 'darwin'
+      ? {
+          asar: true,
+          extraResource: ['./src/resources/log'],
+          osxUniversal: {
+            x64ArchFiles: 'Contents/Resources/**/*',
+          },
+          osxSign: {
+            identity: process.env.APPLE_SIGN_ID,
+          },
+          osxNotarize: {
+            appleApiKey: process.env.APPLE_API_KEY || '',
+            appleApiKeyId: process.env.APPLE_API_KEY_ID || '',
+            appleApiIssuer: process.env.APPLE_API_ISSUER || '',
+          },
+        }
+      : {
+          asar: true,
+          extraResource: ['./src/resources/log'],
+        },
   rebuildConfig: {},
-  makers: [new MakerDMG({ format: 'ULFO' }), new MakerZIP({}, ['darwin', 'win32'])],
+  makers:
+    process.platform === 'darwin'
+      ? [new MakerDMG({ format: 'ULFO' }), new MakerZIP({}, ['darwin'])]
+      : [new MakerSquirrel({}), new MakerZIP({}, ['win32'])],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
