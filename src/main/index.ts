@@ -1,5 +1,5 @@
-import { updateElectronApp } from 'update-electron-app';
 import { app, BrowserWindow } from 'electron';
+import { updateElectronApp, UpdateSourceType } from 'update-electron-app';
 import { IS_DEV_MODE } from './constants/environment';
 import './registers';
 
@@ -9,7 +9,15 @@ import './registers';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-updateElectronApp(); // additional configuration options available
+updateElectronApp({
+  updateSource: {
+    type: UpdateSourceType.ElectronPublicUpdateService,
+    repo: 'SimDaeSoo/LoudnessExtractor',
+    host: 'https://update.electronjs.org',
+  },
+  updateInterval: '5 minutes',
+  notifyUser: true,
+});
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -18,7 +26,7 @@ if (require('electron-squirrel-startup')) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 460,
+    width: 500,
     height: 930,
     resizable: false,
     fullscreen: false,

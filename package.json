@@ -1,9 +1,15 @@
 {
   "name": "loudness_extractor",
-  "productName": "Loudness-Extractor",
-  "description": "Video and audio loudness extractor",
-  "version": "0.0.1",
-  "keywords": [],
+  "productName": "LoudnessExtractor",
+  "description": "Video and audio loudness data extractor",
+  "version": "0.0.2",
+  "keywords": [
+    "electron",
+    "react",
+    "ffmpeg",
+    "ebur128",
+    "loudness"
+  ],
   "author": {
     "name": "daesoo94",
     "email": "tlaeotn123@gmail.com"
@@ -15,13 +21,15 @@
   "license": "MIT",
   "main": ".webpack/main",
   "scripts": {
-    "start": "yarn build:style && electron-forge start",
     "build:style": "tailwindcss -i ./src/renderer/public/index.css -o ./src/renderer/public/build.css",
-    "package:win": "yarn build:style && electron-forge package --platform win32 --arch x64",
-    "package:mac": "yarn build:style && electron-forge package --platform darwin --arch universal",
-    "make:win": "yarn build:style && electron-forge make --platform win32 --arch x64",
-    "make:mac": "yarn build:style && electron-forge make --platform darwin --arch universal",
-    "publish": "electron-forge publish",
+    "start": "yarn build:style && electron-forge start",
+    "package:win32": "yarn build:style && electron-forge package --platform win32 --arch x64",
+    "package:darwin": "yarn build:style && electron-forge package --platform darwin --arch universal",
+    "make:win32": "yarn build:style && electron-forge make --platform win32 --arch x64",
+    "make:darwin": "yarn build:style && electron-forge make --platform darwin --arch universal",
+    "publish:win32": "electron-forge publish --dry-run --platform win32 --arch x64",
+    "publish:darwin": "electron-forge publish --dry-run --platform darwin --arch universal",
+    "publish": "electron-forge publish --from-dry-run",
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {

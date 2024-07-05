@@ -1,3 +1,4 @@
+import { MakerDMG } from '@electron-forge/maker-dmg';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
@@ -5,19 +6,17 @@ import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import type { ForgeConfig } from '@electron-forge/shared-types';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import { config as loadConfig } from 'dotenv';
+import { cpSync } from 'fs';
+import { resolve } from 'path';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
 loadConfig();
 
-const platform = process.argv[3];
-const isWindowsBuild = platform === 'win32';
-const isDarwinBuild = platform === 'darwin';
-
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    extraResource: [`./src/resources/${platform}`, './src/resources/log'],
+    extraResource: ['./src/resources/log'],
     osxUniversal: {
       x64ArchFiles: 'Contents/Resources/**/*',
     },
@@ -31,30 +30,7 @@ const config: ForgeConfig = {
     },
   },
   rebuildConfig: {},
-  makers: [
-    ...(isWindowsBuild && process.platform === 'win32'
-      ? [
-          {
-            name: '@electron-forge/maker-squirrel',
-            config: {
-              certificateFile: './cert.pfx',
-              certificatePassword: process.env.CERTIFICATE_PASSWORD,
-            },
-          },
-        ]
-      : []),
-    ...(isDarwinBuild && process.platform === 'darwin'
-      ? [
-          {
-            name: '@electron-forge/maker-dmg',
-            config: {
-              format: 'ULFO',
-            },
-          },
-        ]
-      : []),
-    new MakerZIP({}, [...(isWindowsBuild ? ['win32'] : []), ...(isDarwinBuild ? ['darwin'] : [])]),
-  ],
+  makers: [new MakerDMG({ format: 'ULFO' }), new MakerZIP({}, ['darwin', 'win32'])],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
@@ -89,7 +65,9 @@ const config: ForgeConfig = {
   publishers: [
     {
       name: '@electron-forge/publisher-github',
+      platforms: ['darwin', 'win32'],
       config: {
+        authToken: process.env.GITHUB_TOKEN,
         repository: {
           owner: 'SimDaeSoo',
           name: 'LoudnessExtractor',
@@ -98,6 +76,14 @@ const config: ForgeConfig = {
       },
     },
   ],
+  hooks: {
+    packageAfterCopy: async (_forgeConfig, buildPath, _electronVersion, platform, _arch) => {
+      const binaryPath = resolve(__dirname, 'src', 'resources', platform);
+      const resourcePath = resolve(buildPath, '..', platform);
+
+      cpSync(binaryPath, resourcePath, { recursive: true });
+    },
+  },
 };
 
 export default config;
