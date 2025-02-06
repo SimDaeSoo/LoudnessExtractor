@@ -141,20 +141,11 @@ export const AnalyzeFilesStep = ({
                       특별한 사유가 없다면 마스터 수정 부탁드립니다.
                       <br />
                       <br />
-                      <Typography.Text className='text-xs' strong>
-                        {'<특별 사유 예시>'}
-                      </Typography.Text>
-                      <br />
-                      <Typography.Text className='text-xs' type='warning'>
-                        * 장르 별 예외: 오디오 가이드 문서 참고
-                      </Typography.Text>
-                      <br />
-                      <Typography.Text className='text-xs' type='warning'>
-                        * 글로벌 번안 관련: 팀 내 상의
-                      </Typography.Text>
-                      <br />
-                      <br />
-                      사유가 있다면 VIMS 업로드 시 비고 사항에 해당 내용 꼭 기재 부탁드립니다.
+                      사유가 있다면 VIMS 업로드 시{' '}
+                      <Typography.Text type='danger' strong underline>
+                        비고 사항에 해당 내용 꼭 기재
+                      </Typography.Text>{' '}
+                      부탁드립니다.
                       <br />
                       <Typography.Text className='text-xs' type='secondary'>
                         (제작 의도인지 오류인지 동기화 필요)

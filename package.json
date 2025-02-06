@@ -2,7 +2,7 @@
   "name": "loudness_extractor",
   "productName": "LoudnessExtractor",
   "description": "Video and audio loudness data extractor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "electron",
     "react",
