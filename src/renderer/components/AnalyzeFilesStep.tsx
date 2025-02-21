@@ -257,16 +257,14 @@ export const AnalyzeFilesStep = ({
   return (
     <>
       <Table
-        className='h-full mt-[12px]'
+        className='mt-[12px]'
         columns={columns}
         dataSource={files}
         size='small'
         rowKey='uid'
         pagination={false}
-        scroll={{ y: 652 }}
         showHeader={false}
         expandable={ROW_EXPANDABLE}
-        virtual
       />
       <Button className='mt-[12px]' type='primary' disabled={!isAllDone} onClick={onClickInitialize}>
         분석 초기화

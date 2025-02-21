@@ -81,15 +81,13 @@ export const SelectFilesStep = ({ files, setFiles, onNextStep }: SelectFilesStep
         dataSource={files}
         size='small'
         rowKey='uid'
-        scroll={{ y: 480 }}
         pagination={false}
         showHeader={false}
-        virtual
         bordered
       />
 
       <Dragger
-        className='h-full mt-[12px]'
+        className='mt-[12px]'
         onChange={onChange}
         fileList={files}
         accept={ACCEPTABLE_FILE_TYPES}

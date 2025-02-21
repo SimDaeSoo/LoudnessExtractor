@@ -578,6 +578,10 @@ video {
   width: 100%;
 }
 
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
 .p-\[12px\] {
   padding: 12px;
 }

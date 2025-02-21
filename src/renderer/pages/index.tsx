@@ -142,8 +142,8 @@ const MainPage = () => {
   }, []);
 
   return (
-    <Space.Compact className='p-[12px] h-full w-full' direction='vertical'>
-      <Steps size='small' direction='horizontal' current={currentStep} items={items} />
+    <Space.Compact className='p-[12px] h-full w-full overflow-y-scroll' direction='vertical'>
+      <Steps size='small' direction='vertical' current={currentStep} items={items} />
 
       {/* Step 1 */}
       {currentStep === 0 && <SelectFilesStep files={files} setFiles={setFiles} onNextStep={onNextStep} />}
