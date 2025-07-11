@@ -4,5 +4,6 @@ export type LoudnessTemplate = {
   name: string;
   integratedLoudnessLow: number;
   integratedLoudnessHigh: number;
-  truePeak: number;
+  truePeakLow?: number;
+  truePeakHigh?: number;
 };

@@ -39,12 +39,20 @@ export const AnalyzeFilesStep = ({
       expandedRowRender: (record: AnalyzeFile) => {
         const hasIntegratedLoudnessAndTemplate =
           record?.loudness?.integratedLoudness?.i !== undefined && currentTemplate;
-        const hasTruePeakAndTemplate = record?.loudness?.truePeak?.peak !== undefined && currentTemplate;
         const integratedLoudnessPassed =
           hasIntegratedLoudnessAndTemplate &&
           record.loudness.integratedLoudness.i >= currentTemplate.integratedLoudnessLow &&
           record.loudness.integratedLoudness.i <= currentTemplate.integratedLoudnessHigh;
-        const truePeakPassed = hasTruePeakAndTemplate && record.loudness.truePeak.peak <= currentTemplate.truePeak;
+
+        const truePeakLowPassed =
+          record?.loudness?.truePeak?.peak !== undefined &&
+          currentTemplate &&
+          (currentTemplate.truePeakLow === undefined || record.loudness.truePeak.peak >= currentTemplate.truePeakLow);
+        const truePeakHighPassed =
+          record?.loudness?.truePeak?.peak !== undefined &&
+          currentTemplate &&
+          (currentTemplate.truePeakHigh === undefined || record.loudness.truePeak.peak <= currentTemplate.truePeakHigh);
+        const truePeakPassed = truePeakLowPassed && truePeakHighPassed;
 
         return (
           <Descriptions
@@ -104,8 +112,18 @@ export const AnalyzeFilesStep = ({
                     {currentTemplate && !truePeakPassed && (
                       <Tag icon={<InfoCircleOutlined />} color='warning'>
                         허용 범위
-                        <Divider type='vertical' />
-                        {currentTemplate.truePeak} dBFS 이하
+                        {currentTemplate.truePeakLow !== undefined && (
+                          <>
+                            <Divider type='vertical' />
+                            {currentTemplate.truePeakLow} dBFS 이상
+                          </>
+                        )}
+                        {currentTemplate.truePeakHigh !== undefined && (
+                          <>
+                            <Divider type='vertical' />
+                            {currentTemplate.truePeakHigh} dBFS 이하
+                          </>
+                        )}
                       </Tag>
                     )}
                   </Space>

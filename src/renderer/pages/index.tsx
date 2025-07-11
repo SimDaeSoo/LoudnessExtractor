@@ -4,36 +4,105 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnalyzeFilesStep } from '../components/AnalyzeFilesStep';
 import { SelectFilesStep } from '../components/SelectFilesStep';
 import { AnalyzeFile } from '../types/file';
+import { LoudnessTemplate } from '../types/template';
 
-const getLoudnessAnalyzeTemplates = async () => {
-  try {
-    const BASE_URL = 'https://vims-test.thepinkfong.com';
-    const response = await fetch(`${BASE_URL}/graphql`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `
-        query {
-          loudnessTemplates {
-            id
-            name
-            groupName
-            integratedLoudnessLow
-            integratedLoudnessHigh
-            truePeak
-          }
-        }
-      `,
-      }),
-    });
-    const { data } = await response.json();
+const getLoudnessAnalyzeTemplates = () => {
+  const templates: Array<LoudnessTemplate> = [
+    {
+      id: 1,
+      groupName: 'ST',
+      name: '음원 (유아동 타겟)',
+      integratedLoudnessHigh: -7.5,
+      integratedLoudnessLow: -11.5,
+      truePeakHigh: -0.1,
+    },
+    {
+      id: 2,
+      groupName: 'ST',
+      name: '음원 (전연령 타겟)',
+      integratedLoudnessHigh: -5.5,
+      integratedLoudnessLow: -8.5,
+      truePeakHigh: -0.1,
+    },
+    {
+      id: 3,
+      groupName: 'ST',
+      name: '이야기/동화/뮤지컬 (트랙 내 스토리 포함)',
+      integratedLoudnessHigh: -13.5,
+      integratedLoudnessLow: -14.5,
+      truePeakHigh: -0.1,
+    },
+    {
+      id: 4,
+      groupName: 'ST',
+      name: '음원 - 기타 (잔잔한 보컬곡)',
+      integratedLoudnessHigh: -7.5,
+      integratedLoudnessLow: -16.5,
+      truePeakHigh: -0.1,
+    },
+    {
+      id: 5,
+      groupName: 'ST',
+      name: '음원 - 기타 (잔잔한 연주곡)',
+      integratedLoudnessHigh: -7.5,
+      integratedLoudnessLow: -18.5,
+      truePeakHigh: -0.1,
+    },
+    {
+      id: 6,
+      groupName: 'VS',
+      name: 'VS',
+      integratedLoudnessHigh: -13,
+      integratedLoudnessLow: -15,
+      truePeakLow: -1.5,
+      truePeakHigh: -0.5,
+    },
+    {
+      id: 7,
+      groupName: 'VS',
+      name: '내부 편집본 (Fla.)',
+      integratedLoudnessHigh: -13,
+      integratedLoudnessLow: -15,
+      truePeakHigh: 0,
+    },
+    {
+      id: 8,
+      groupName: 'VO',
+      name: 'Youtube 서비스용',
+      integratedLoudnessHigh: -13,
+      integratedLoudnessLow: -15,
+      truePeakLow: -1.5,
+      truePeakHigh: -0.5,
+    },
+    {
+      id: 9,
+      groupName: 'VO',
+      name: 'Shorts/App/홍보영상',
+      integratedLoudnessHigh: -13,
+      integratedLoudnessLow: -15,
+      truePeakLow: -1.5,
+      truePeakHigh: -0.5,
+    },
+    {
+      id: 10,
+      groupName: 'VO',
+      name: 'TV/OTT/극장판',
+      integratedLoudnessHigh: -23.5,
+      integratedLoudnessLow: -24.5,
+      truePeakLow: -1.5,
+      truePeakHigh: -0.5,
+    },
+    {
+      id: 11,
+      groupName: 'VO',
+      name: '내부 편집본 (Fla.)',
+      integratedLoudnessHigh: -13,
+      integratedLoudnessLow: -15,
+      truePeakHigh: 0,
+    },
+  ];
 
-    return data?.loudnessTemplates || [];
-  } catch (e) {
-    return [];
-  }
+  return templates;
 };
 
 const MainPage = () => {
@@ -61,7 +130,7 @@ const MainPage = () => {
   }, [files, currentStep]);
 
   const initializeTemplates = useCallback(async () => {
-    const templates = await getLoudnessAnalyzeTemplates();
+    const templates = getLoudnessAnalyzeTemplates();
     setTemplates(templates);
   }, []);
 
